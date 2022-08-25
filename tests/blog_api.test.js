@@ -36,6 +36,7 @@ describe("API calls", () => {
       title: "Stardew Valley Beginner Tips",
       author: "Clever Ape",
       url: "https://polygon.com/",
+      userId: "6307daff4d9aa036d12271eb"
     }
     await api.post('/api/blogs').send(newBlog).expect(201).expect('Content-Type', /application\/json/)
 
@@ -50,6 +51,7 @@ describe("API calls", () => {
       title: "No Likes",
       author: "No Author",
       url: "https://nowebsite.com/",
+      userId: "6307daff4d9aa036d12271eb"
     }
 
     const res = await api.post('/api/blogs').send(newBlog).expect(201).expect('Content-Type', /application\/json/)
@@ -76,6 +78,7 @@ describe("API calls", () => {
       title: "To Delete",
       author: "Delete Me",
       url: "https://pleasedelete.com/",
+      userId: "6307daff4d9aa036d12271eb"
     }
 
     const res = await api.post('/api/blogs').send(newBlog).expect(201).expect('Content-Type', /application\/json/)
@@ -90,6 +93,7 @@ describe("API calls", () => {
       title: "To Update",
       author: "Update Me",
       url: "https://pleaseupdate.com/",
+      userId: "6307daff4d9aa036d12271eb"
     }
 
     const res = await api.post('/api/blogs').send(newBlog).expect(201).expect('Content-Type', /application\/json/)

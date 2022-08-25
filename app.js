@@ -4,15 +4,16 @@ const config = require('./utils/config');
 const app = express();
 const cors = require('cors');
 const blogsRouter = require('./controllers/blogs');
+const usersRouter = require('./controllers/users');
 
 app.use(cors());
 app.use(express.json());
-require('express-async-errors');
+
 
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 
-
+//unecessary?
 mongoose.connect(config.MONGODB_URI)
   .then(() => {
     logger.info('connected to MongoDB')
@@ -22,5 +23,6 @@ mongoose.connect(config.MONGODB_URI)
   })
 
 app.use('/api/blogs', blogsRouter);
+app.use('/api/users', usersRouter)
 
 module.exports = app;
