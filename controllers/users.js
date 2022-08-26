@@ -3,9 +3,22 @@ const usersRouter = require("express").Router();
 const User = require("../models/User");
 
 //TODO: error handling and password validation
-//We could check that the username is long enough, that the username only consists of permitted characters, or that the password is strong enough.
+//We could check that the username only consists of permitted characters, or that the password is strong enough.
 usersRouter.post("/", async (request, response, next) => {
   const { username, name, password } = request.body
+
+  if(username.length <= 3) {
+    return response.status(400).json({
+      error: "username must be greater than 3 characters",
+    });
+  }
+
+  if(password.length <= 3) {
+    return response.status(400).json({
+      error: "password must be greater than 3 characters",
+    });
+  }
+
   try {
     const existingUser = await User.findOne({ username });
     if (existingUser) {
@@ -13,6 +26,7 @@ usersRouter.post("/", async (request, response, next) => {
         error: "username must be unique",
       });
     }
+
   } catch (e) {
     console.log("error finding existing user");
     console.log(e)
