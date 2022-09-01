@@ -35,25 +35,23 @@ const Blog = ({ blog, blogs, setBlogs }) => {
   };
 
   const removeBlog = async () => {
-    try{
-      if(window.confirm("Are you sure you wante to delete this blog?")){
+    try {
+      if (window.confirm("Are you sure you wante to delete this blog?")) {
         await blogService.remove(blog.id);
       }
-      setBlogs(blogs.filter(b => b.id !== blog.id))
-    } catch(e){
-      console.log(e)
+      setBlogs(blogs.filter((b) => b.id !== blog.id));
+    } catch (e) {
+      console.log(e);
     }
-    
-  }
+  };
 
   return (
     <div style={blogStyle}>
-      <strong>{blog.title} </strong> <br />
+      {blog.title} - {blog.author}
       <div style={hideWhenVisible}>
         <button onClick={toggleVisibility}>show</button>
       </div>
       <div style={showWhenVisible}>
-        {blog.author} <br />
         {blog.url} <br />
         {blog.likes} <br />
         {blog.id}
