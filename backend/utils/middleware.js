@@ -29,6 +29,7 @@ const errorHandler = (error, _request, response, next) => {
   next(error);
 };
 
+//grab the auth token from the request
 const getToken = (request, response, next) => {
   const authorization = request.get("authorization");
   if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
@@ -37,6 +38,7 @@ const getToken = (request, response, next) => {
   next();
 };
 
+//gets the decoded user token if currently logged in
 const userExtractor = (request, response, next) => {
   if (!request.token) {
     return response.status(401).json({
@@ -44,7 +46,6 @@ const userExtractor = (request, response, next) => {
     });
   }
   const decodedToken = jwt.verify(request.token, process.env.SECRET);
-  console.log(decodedToken);
 
   if (!decodedToken.id) {
     return response.status(401).json({

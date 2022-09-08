@@ -19,6 +19,7 @@ const App = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
+      console.log(user);
       blogService.setToken(user.token);
     }
 
@@ -54,7 +55,7 @@ const App = () => {
             />
           </Togglable>
 
-          <BlogList logout={() => logOut()} blogs={blogs} setBlogs={setBlogs}/>
+          <BlogList user = {user} blogs={blogs} setBlogs={setBlogs}/>
         </>
       )}
     </>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import blogService from "../services/blogs";
 
-const Blog = ({ blog, blogs, setBlogs }) => {
+const Blog = ({ user, blog, blogs, setBlogs }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -17,19 +17,19 @@ const Blog = ({ blog, blogs, setBlogs }) => {
     setVisible(!visible);
   };
 
-  const addLike = async () => {
+  const toggleLike = async () => {
     const blogObject = {
       title: blog.title,
       author: blog.author,
       url: blog.url,
-      likes: blog.likes + 1,
+      likes: blog.likes,
     };
+
     try {
-      console.log(blog);
       const res = await blogService.update(blog.id, blogObject);
-      console.log(res);
       setBlogs(blogs.map((b) => (b.id !== blog.id ? b : res)));
     } catch (e) {
+      console.log("error updating blog");
       console.log(e);
     }
   };
@@ -53,10 +53,14 @@ const Blog = ({ blog, blogs, setBlogs }) => {
       </div>
       <div style={showWhenVisible}>
         {blog.url} <br />
-        {blog.likes} <br />
+        {blog.likes.length} <br />
         {blog.id}
-        <button onClick={addLike}>Like</button>
-        <button onClick={removeBlog}>Delete</button>
+        <button onClick={toggleLike}>
+          {blog.likes.includes(user.id) ? "unlike" : "like"}
+        </button>
+        {blog.user.toString() === user.id.toString() && (
+          <button onClick={removeBlog}>Delete</button>
+        )}
         <button onClick={toggleVisibility}>hide</button>
       </div>
     </div>
