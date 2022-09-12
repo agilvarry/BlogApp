@@ -5,9 +5,8 @@ import blogService from "./services/blogs";
 import Notification from "./components/Notification";
 import BlogForm from "./components/BlogForm";
 import BlogList from "./components/BlogList";
-import LoginForm from "./components/LoginForm";
 import Togglable from "./components/Toggleable";
-
+import Navigation from "./components/Navigation";
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [notificationMessage, setNotificationMessage] = useState(null);
@@ -26,27 +25,15 @@ const App = () => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
   }, [setUser]);
 
-  const logOut = () => {
-    window.localStorage.removeItem("loggedInUser");
-    setUser(null);
-  };
-
   return (
     <>
-      <h2>BlogsApp</h2>
+      <Navigation user={user} setUser={setUser} setNotificationMessage={setNotificationMessage} />
+
       <Notification message={notificationMessage} />
       {user === null ? (
-        <LoginForm
-          setUser={setUser}
-          setNotificationMessage={setNotificationMessage}
-        />
+        <h1>Hello, best log in</h1>
       ) : (
         <>
-          <div>
-            <p>
-              {user.name} logged-in <button onClick={logOut}>Log Out</button>
-            </p>
-          </div>
           <Togglable buttonLabel="New Blog">
             <BlogForm
               blogs={blogs}
