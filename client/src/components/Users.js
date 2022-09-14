@@ -1,6 +1,6 @@
 import React from "react";
 import { Table } from "react-bootstrap";
-import User from "./User";
+
 const Users = ({ users }) => {
   return (
     <>
@@ -13,12 +13,14 @@ const Users = ({ users }) => {
           </tr>
         </thead>
         <tbody>
-          
-            {users.map((user) => <User key = {user.id} username={user.username} blogs={user.blogs.length} />)}
-    
+          {users.map((user) => (
+            <tr>
+              <td>{user.username}</td>
+              <td>{user.blogs.length}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
-      
     </>
   );
 };

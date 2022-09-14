@@ -1,10 +1,6 @@
 import React from "react";
 
-export default function User({username, blogs}){
+export default function User({}){
     return(<>
-    <tr>
-        <td>{username}</td>
-        <td>{blogs}</td>
-    </tr>
     </>)
 }
