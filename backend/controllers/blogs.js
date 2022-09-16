@@ -6,10 +6,7 @@ const middleware = require("../utils/middleware");
 //get all blogs
 blogsRouter.get("/", async (_request, response, next) => {
   try {
-    const blogs = await Blog.find({}).populate("user", {
-      username: 1,
-      name: 1,
-    }); //TODO: populate likes
+    const blogs = await Blog.find({})
     response.json(blogs);
   } catch (e) {
     next(e);

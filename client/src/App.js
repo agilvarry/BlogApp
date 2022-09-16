@@ -7,12 +7,14 @@ import { Routes, Route, Link, useMatch } from "react-router-dom";
 import Home from "./components/Home";
 import Users from "./components/Users";
 import User from "./components/User";
+import BlogView from "./components/BlogView";
+
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [notificationMessage, setNotificationMessage] = useState(null);
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState(null);
-  const [selectedBlogs, setSelectedBlogs] = useState(null)
+
   async function fetchData() {
     const loggedUserJSON = window.localStorage.getItem("loggedInUser");
     if (loggedUserJSON) {
@@ -36,6 +38,11 @@ const App = () => {
   const selectedUser = userMatch
     ? users.find(user => user.id === userMatch.params.id)
     : null;
+
+  const blogMatch = useMatch("blogs/:id")
+  const selectedBlog = blogMatch
+    ? blogs.find(blog => blog.id === blogMatch.params.id)
+    : null;
   
   return (
     <>
@@ -47,6 +54,7 @@ const App = () => {
       <Notification message={notificationMessage} />
       <Routes>
         <Route path="/users/:id" element={<User selectedUser={selectedUser} blogs={blogs} user={user} setBlogs={setBlogs}/>} />
+        <Route path="/blogs/:id" element={<BlogView selectedBlog={selectedBlog}  user={user}/>} />
         <Route path="/users" element={<Users users={users} />} />
         <Route
           path="/"

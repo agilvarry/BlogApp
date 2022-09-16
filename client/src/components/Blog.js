@@ -1,21 +1,18 @@
-import { useState } from "react";
+import React from 'react';
 import blogService from "../services/blogs";
+import { Link } from 'react-router-dom'
 
 const Blog = ({ user, blog, blogs, setBlogs }) => {
-  
+  const padding = {
+    padding: 5,
+  };
+
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
     border: "solid",
     borderWidth: 1,
     marginBottom: 5,
-  };
-  const [visible, setVisible] = useState(false);
-
-  const hideWhenVisible = { display: visible ? "none" : "" };
-  const showWhenVisible = { display: visible ? "" : "none" };
-  const toggleVisibility = () => {
-    setVisible(!visible);
   };
 
   const toggleLike = async () => {
@@ -48,21 +45,14 @@ const Blog = ({ user, blog, blogs, setBlogs }) => {
 
   return (
     <div style={blogStyle}>
-      {blog.title} - {blog.author}
-      <div style={hideWhenVisible}>
-        <button onClick={toggleVisibility}>show</button>
-      </div>
-      <div style={showWhenVisible}>
-        {blog.likes.length} <br />
-        {blog.content} <br />
-        <button onClick={toggleLike}>
+      <Link style={padding} to={`/blogs/${blog.id}`}>{blog.title} - {blog.author}</Link>
+      
+      <button onClick={toggleLike}>
           {blog.likes.includes(user.id) ? "unlike" : "like"}
         </button>
         {blog.user.toString() === user.id.toString() && (
           <button onClick={removeBlog}>Delete</button>
         )}
-        <button onClick={toggleVisibility}>hide</button>
-      </div>
     </div>
   );
 };
