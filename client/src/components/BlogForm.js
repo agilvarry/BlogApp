@@ -8,7 +8,7 @@ const BlogForm = ({
 }) => {
     const [newBlogTitle, setNewBlogTitle] = useState("");
     const [newBlogAuthor, setNewBlogAuthor] = useState("");
-    const [newBlogURL, setNewBlogURL] = useState("");
+    const [newBlogContent, setNewBlogContent] = useState("");
 
   const handleTitleChange = (event) => {
     setNewBlogTitle(event.target.value);
@@ -16,8 +16,8 @@ const BlogForm = ({
   const handleAuthorChange = (event) => {
     setNewBlogAuthor(event.target.value);
   };
-  const handleURLChange = (event) => {
-    setNewBlogURL(event.target.value);
+  const handleContentChange = (event) => {
+    setNewBlogContent(event.target.value);
   };
 
   const addBlog = async (event) => {
@@ -25,7 +25,7 @@ const BlogForm = ({
     const blogObject = {
       title: newBlogTitle,
       author: newBlogAuthor,
-      url: newBlogURL,
+      content: newBlogContent,
     };
     try {
       const returnedBlog = await blogService.create(blogObject);
@@ -33,7 +33,7 @@ const BlogForm = ({
       setBlogs(blogs.concat(returnedBlog));
       setNewBlogTitle("");
       setNewBlogAuthor("");
-      setNewBlogURL("");
+      setNewBlogContent("");
       setNotificationMessage("Added blog");
       setTimeout(() => {
         setNotificationMessage(null);
@@ -57,8 +57,8 @@ const BlogForm = ({
           id="author"
           onChange={handleAuthorChange}
         />
-        <label htmlFor="url">URL</label>
-        <input value={newBlogURL} id="url" onChange={handleURLChange} />
+        <label htmlFor="content">Content</label>
+        <input value={newBlogContent} id="content" onChange={handleContentChange} />
         <button type="submit">save</button>
       </form>
     </>

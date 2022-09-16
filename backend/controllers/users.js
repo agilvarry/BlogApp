@@ -52,7 +52,7 @@ usersRouter.post("/", async (request, response, next) => {
 
 usersRouter.get("/", async (_request, response, next) => {
   try {
-    const users = await User.find({}).populate('blogs', {username: 1, author: 1, url: 1, likes: 1});
+    const users = await User.find({}).populate('blogs', {title: 1, username: 1, author: 1, content: 1, likes: 1, user:1});
     response.json(users);
   } catch (e) {
     console.log("error getting user");

@@ -1,7 +1,12 @@
 import React from "react";
 import { Table } from "react-bootstrap";
-
+import { Link } from "react-router-dom";
 const Users = ({ users }) => {
+
+    const padding = {
+        padding: 5
+      }
+
   return (
     <>
       <h1>Users</h1>
@@ -14,8 +19,8 @@ const Users = ({ users }) => {
         </thead>
         <tbody>
           {users.map((user) => (
-            <tr>
-              <td>{user.username}</td>
+            <tr key={user.id}>
+              <td><Link style={padding} to={`/users/${user.id}`}>{user.username}</Link></td>
               <td>{user.blogs.length}</td>
             </tr>
           ))}

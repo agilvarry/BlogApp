@@ -18,7 +18,7 @@ const Home = ({user, blogs, setBlogs, setNotificationMessage}) => {
             />
           </Togglable>
 
-          <BlogList user={user} blogs={blogs} setBlogs={setBlogs} />
+          <BlogList user={user} blogs={blogs} id={null} setBlogs={setBlogs} />
         </>
       )}
     </>

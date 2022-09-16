@@ -1,37 +1,44 @@
 import { useState, useEffect } from "react";
 import blogService from "./services/blogs";
-import userService from "./services/users"
+import userService from "./services/users";
 import Notification from "./components/Notification";
 import Navigation from "./components/Navigation";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useMatch } from "react-router-dom";
 import Home from "./components/Home";
 import Users from "./components/Users";
+import User from "./components/User";
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [notificationMessage, setNotificationMessage] = useState(null);
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([]);
   const [user, setUser] = useState(null);
+  const [selectedBlogs, setSelectedBlogs] = useState(null)
+  async function fetchData() {
+    const loggedUserJSON = window.localStorage.getItem("loggedInUser");
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
+      
+      blogService.setToken(user.token);
+    }
+    const allUsers = await userService.getUsers();
+    setUsers(allUsers);
+    const allBlogs = await blogService.getAll();
+    setBlogs(allBlogs);
+    
+  }
 
   useEffect(() => {
-    async function fetchData(){
-      const loggedUserJSON = window.localStorage.getItem("loggedInUser");
-      if (loggedUserJSON) {
-        const user = JSON.parse(loggedUserJSON);
-        setUser(user);
-        console.log(user);
-        blogService.setToken(user.token);
-      }
-      const allUsers = await userService.getUsers();
-      setUsers(allUsers);
-      const allBlogs = await blogService.getAll();
-      setBlogs(allBlogs);
-    }
     fetchData();
-    console.log(users)
   }, [setUser, setBlogs, setUsers]);
-
+  
+  const userMatch = useMatch("/users/:id");
+  const selectedUser = userMatch
+    ? users.find(user => user.id === userMatch.params.id)
+    : null;
+  
   return (
-    <Router>
+    <>
       <Navigation
         user={user}
         setUser={setUser}
@@ -39,7 +46,7 @@ const App = () => {
       />
       <Notification message={notificationMessage} />
       <Routes>
-        {/* <Route path="/notes" element={<Notes />} /> */}
+        <Route path="/users/:id" element={<User selectedUser={selectedUser} blogs={blogs} user={user} setBlogs={setBlogs}/>} />
         <Route path="/users" element={<Users users={users} />} />
         <Route
           path="/"
@@ -53,22 +60,7 @@ const App = () => {
           }
         />
       </Routes>
-      {/* {user === null ? (
-        <h1>Hello, best log in</h1>
-      ) : (
-        <>
-          <Togglable buttonLabel="New Blog">
-            <BlogForm
-              blogs={blogs}
-              setBlogs={setBlogs}
-              setNotificationMessage={setNotificationMessage}
-            />
-          </Togglable>
-
-          <BlogList user={user} blogs={blogs} setBlogs={setBlogs} />
-        </>
-      )} */}
-    </Router>
+    </>
   );
 };
 

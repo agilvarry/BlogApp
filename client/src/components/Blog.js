@@ -2,6 +2,7 @@ import { useState } from "react";
 import blogService from "../services/blogs";
 
 const Blog = ({ user, blog, blogs, setBlogs }) => {
+  
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -21,13 +22,13 @@ const Blog = ({ user, blog, blogs, setBlogs }) => {
     const blogObject = {
       title: blog.title,
       author: blog.author,
-      url: blog.url,
+      content: blog.content,
       likes: blog.likes,
     };
-
     try {
       const res = await blogService.update(blog.id, blogObject);
       setBlogs(blogs.map((b) => (b.id !== blog.id ? b : res)));
+
     } catch (e) {
       console.log("error updating blog");
       console.log(e);
@@ -52,9 +53,8 @@ const Blog = ({ user, blog, blogs, setBlogs }) => {
         <button onClick={toggleVisibility}>show</button>
       </div>
       <div style={showWhenVisible}>
-        {blog.url} <br />
         {blog.likes.length} <br />
-        {blog.id}
+        {blog.content} <br />
         <button onClick={toggleLike}>
           {blog.likes.includes(user.id) ? "unlike" : "like"}
         </button>
