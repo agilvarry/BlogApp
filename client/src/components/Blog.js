@@ -1,8 +1,10 @@
 import React from 'react';
 import blogService from "../services/blogs";
 import { Link } from 'react-router-dom'
-
-const Blog = ({ user, blog, blogs, setBlogs }) => {
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleLikes, removeBlog} from '../reducers/blogReducer'
+const Blog = ({ user, blog }) => {
+  const dispatch = useDispatch()
   const padding = {
     padding: 5,
   };
@@ -24,7 +26,7 @@ const Blog = ({ user, blog, blogs, setBlogs }) => {
     };
     try {
       const res = await blogService.update(blog.id, blogObject);
-      setBlogs(blogs.map((b) => (b.id !== blog.id ? b : res)));
+      // setBlogs(blogs.map((b) => (b.id !== blog.id ? b : res)));
 
     } catch (e) {
       console.log("error updating blog");
@@ -37,7 +39,7 @@ const Blog = ({ user, blog, blogs, setBlogs }) => {
       if (window.confirm("Are you sure you wante to delete this blog?")) {
         await blogService.remove(blog.id);
       }
-      setBlogs(blogs.filter((b) => b.id !== blog.id));
+      // setBlogs(blogs.filter((b) => b.id !== blog.id));
     } catch (e) {
       console.log(e);
     }
