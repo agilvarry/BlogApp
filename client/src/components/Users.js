@@ -1,8 +1,9 @@
 import React from "react";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-const Users = ({ users }) => {
-
+import { useSelector } from 'react-redux';
+const Users = () => {
+  const users = useSelector(state => state.userList);
     const padding = {
         padding: 5
       }

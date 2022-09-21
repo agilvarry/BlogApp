@@ -2,8 +2,12 @@ import React from "react";
 import BlogForm from "../components/BlogForm";
 import BlogList from "../components/BlogList";
 import Togglable from "../components/Toggleable";
+import {  useSelector } from 'react-redux';
 
-const Home = ({user, blogs, setBlogs, setNotificationMessage}) => {
+const Home = () => {
+ 
+  const user = useSelector(state => state.user);
+   
   return (
     <>
       {user === null ? (
@@ -11,14 +15,10 @@ const Home = ({user, blogs, setBlogs, setNotificationMessage}) => {
       ) : (
         <>
           <Togglable buttonLabel="New Blog">
-            <BlogForm
-              blogs={blogs}
-              setBlogs={setBlogs}
-              setNotificationMessage={setNotificationMessage}
-            />
+            <BlogForm  />
           </Togglable>
 
-          <BlogList user={user} blogs={blogs} id={null} setBlogs={setBlogs} />
+          <BlogList id={null}  />
         </>
       )}
     </>

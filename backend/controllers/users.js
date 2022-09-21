@@ -5,7 +5,7 @@ const User = require("../models/User");
 //TODO: error handling and password validation
 //We could check that the username only consists of permitted characters, or that the password is strong enough.
 usersRouter.post("/", async (request, response, next) => {
-  const { username, name, password } = request.body
+  const { username, password } = request.body
 
   if(username.length <= 3) {
     return response.status(400).json({
@@ -38,7 +38,6 @@ usersRouter.post("/", async (request, response, next) => {
 
   const user = new User({
     username: username,
-    name: name,
     passwordHash,
   });
   try {

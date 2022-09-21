@@ -1,14 +1,14 @@
 import { useState } from "react";
 import blogService from "../services/blogs";
+import { useDispatch } from "react-redux";
+import { appendBlog } from "../reducers/blogReducer";
+import { setNotification } from "../reducers/notificationReducer";
+const BlogForm = () => {
+  const dispatch = useDispatch();
 
-const BlogForm = ({
-  blogs,
-  setBlogs,
-  setNotificationMessage
-}) => {
-    const [newBlogTitle, setNewBlogTitle] = useState("");
-    const [newBlogAuthor, setNewBlogAuthor] = useState("");
-    const [newBlogContent, setNewBlogContent] = useState("");
+  const [newBlogTitle, setNewBlogTitle] = useState("");
+  const [newBlogAuthor, setNewBlogAuthor] = useState("");
+  const [newBlogContent, setNewBlogContent] = useState("");
 
   const handleTitleChange = (event) => {
     setNewBlogTitle(event.target.value);
@@ -29,19 +29,19 @@ const BlogForm = ({
     };
     try {
       const returnedBlog = await blogService.create(blogObject);
+      dispatch(appendBlog(returnedBlog));
 
-      setBlogs(blogs.concat(returnedBlog));
       setNewBlogTitle("");
       setNewBlogAuthor("");
       setNewBlogContent("");
-      setNotificationMessage("Added blog");
+      dispatch(setNotification("Added Blog"));
       setTimeout(() => {
-        setNotificationMessage(null);
+        dispatch(setNotification(null));
       }, 5000);
     } catch (e) {
-      setNotificationMessage(e);
+      dispatch(setNotification(e));
       setTimeout(() => {
-        setNotificationMessage(null);
+        dispatch(setNotification(null));
       }, 5000);
     }
   };
@@ -58,7 +58,11 @@ const BlogForm = ({
           onChange={handleAuthorChange}
         />
         <label htmlFor="content">Content</label>
-        <input value={newBlogContent} id="content" onChange={handleContentChange} />
+        <input
+          value={newBlogContent}
+          id="content"
+          onChange={handleContentChange}
+        />
         <button type="submit">save</button>
       </form>
     </>

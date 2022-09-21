@@ -1,13 +1,23 @@
 import React from "react";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import {useParams} from 'react-router-dom';
+export default function BlogView({}) {
+  const id = useParams().id;
+  const blogs = useSelector((state) => state.blogs);
+  const blog = blogs.find((b) => b.id === id);
 
-export default function BlogView({ selectedBlog, user }){
-    const id = useParams().id
-
-    return(<>
-        <h1>{selectedBlog.title}</h1>
-        <h2>{selectedBlog.author}</h2>
-        <p>{selectedBlog.content}</p>
-    </>);
+  return (
+    <>
+      {blog ? (
+        <>
+          <h1>{blog.title}</h1>
+          <h2>{blog.author}</h2>
+          <p>{blog.content}</p>
+        </>
+      ) : (
+        <p>no blog</p>
+      )}
+    </>
+  );
 }

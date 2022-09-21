@@ -2,9 +2,10 @@ import React from 'react';
 import blogService from "../services/blogs";
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { toggleLikes, removeBlog} from '../reducers/blogReducer'
-const Blog = ({ user, blog }) => {
+import { toggleLikes, deleteBlog} from '../reducers/blogReducer'
+const Blog = ({ blog }) => {
   const dispatch = useDispatch()
+  const user = useSelector(state => state.user);
   const padding = {
     padding: 5,
   };
@@ -26,7 +27,7 @@ const Blog = ({ user, blog }) => {
     };
     try {
       const res = await blogService.update(blog.id, blogObject);
-      // setBlogs(blogs.map((b) => (b.id !== blog.id ? b : res)));
+      dispatch(toggleLikes({blogId: blog.id, newLikes: res.likes}))
 
     } catch (e) {
       console.log("error updating blog");
@@ -39,7 +40,7 @@ const Blog = ({ user, blog }) => {
       if (window.confirm("Are you sure you wante to delete this blog?")) {
         await blogService.remove(blog.id);
       }
-      // setBlogs(blogs.filter((b) => b.id !== blog.id));
+      dispatch(deleteBlog(blog.id))
     } catch (e) {
       console.log(e);
     }
@@ -48,7 +49,7 @@ const Blog = ({ user, blog }) => {
   return (
     <div style={blogStyle}>
       <Link style={padding} to={`/blogs/${blog.id}`}>{blog.title} - {blog.author}</Link>
-      
+      Likes: {blog.likes.length}
       <button onClick={toggleLike}>
           {blog.likes.includes(user.id) ? "unlike" : "like"}
         </button>

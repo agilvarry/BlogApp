@@ -1,8 +1,11 @@
 import {useState} from "react";
 import loginService from "../services/login";
 import blogService from "../services/blogs";
-
-const LoginForm = ({setUser, setNotificationMessage}) => {
+import { useDispatch} from 'react-redux';
+import {setUser} from '../reducers/userReducer'
+import { setNotification } from "../reducers/notificationReducer";
+const LoginForm = () => {
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -14,15 +17,15 @@ const LoginForm = ({setUser, setNotificationMessage}) => {
         password,
       });
 
-      setUser(user);
+      dispatch(setUser(user));
       window.localStorage.setItem("loggedInUser", JSON.stringify(user));
-      blogService.setToken(user.token);
+      blogService.setToken(user.token); //TODO: move into reducer?
       setUsername("");
       setPassword("");
     } catch (exception) {
-      setNotificationMessage("Wrong credentials");
+      dispatch(setNotification("Wrong credentials"));
       setTimeout(() => {
-        setNotificationMessage(null);
+        dispatch(setNotification(null));
       }, 5000);
     }
   };

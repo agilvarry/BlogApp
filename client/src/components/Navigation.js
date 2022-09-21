@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import { Button, NavDropdown, Navbar, Container } from "react-bootstrap";
 import LoginForm from "./LoginForm";
 import NewUserForm from "./NewUserForm";
-
-const Navigation = ({ user, setUser, setNotificationMessage }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import {setUser} from '../reducers/userReducer'
+const Navigation = () => {
+  const dispatch = useDispatch()
+  const user = useSelector(state => state.user);
   const [loginVisible, setLoginVisible] = useState(false);
   const [newVisible, setNewVisible] = useState(false);
   
-
   const logOut = () => {
     window.localStorage.removeItem("loggedInUser");
-    setUser(null);
+    dispatch(setUser(null));
   };
 
   const loginForm = () => {
@@ -29,7 +31,7 @@ const Navigation = ({ user, setUser, setNotificationMessage }) => {
           </Button>
         </div>
         <div style={showWhenVisible}>
-          <LoginForm setUser={setUser}  setNotificationMessage={setNotificationMessage}/>
+          <LoginForm />
           <Button
             size="sm"
             variant="secondary"
@@ -57,9 +59,7 @@ const Navigation = ({ user, setUser, setNotificationMessage }) => {
           </Button>
         </div>
         <div style={showWhenVisible}>
-          <NewUserForm
-            setUser={setUser}
-          />
+          <NewUserForm />
           <Button
             size="sm"
             variant="secondary"

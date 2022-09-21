@@ -15,7 +15,7 @@ const blogSlice = createSlice({
       };
       return state.map((blog) => (blog.id !== blogId ? blog : changedBlog));
     },
-    removeBlog(state, action) {
+    deleteBlog(state, action) {
       const blogId = action.payload;
       return state.filter((b) => b.id !== blogId);
     },
@@ -37,5 +37,5 @@ export const initializeBlogs = () => {
 
 
 
-export const { toggleLikes, removeBlog, setBlogs, appendBlog } =  blogSlice.actions;
+export const { toggleLikes, deleteBlog, setBlogs, appendBlog } =  blogSlice.actions;
 export default blogSlice.reducer;

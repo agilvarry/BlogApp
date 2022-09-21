@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import userService from "../services/users";
 import loginService from "../services/login";
 import {Form, Button} from 'react-bootstrap';
-const NewUserForm = ({ setUser }) => {
+import { useDispatch } from 'react-redux';
+import { setUser } from '../reducers/userReducer';
+const NewUserForm = () => {
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const handleUsernameChange = (event) => setUsername(event.target.value);
@@ -12,8 +15,8 @@ const NewUserForm = ({ setUser }) => {
     event.preventDefault();
     try {
       await userService.create({
-        username,
-        password,
+        username: username,
+        password: password,
       });
 
       const user = await loginService.login({
@@ -22,7 +25,7 @@ const NewUserForm = ({ setUser }) => {
       });
 
       window.localStorage.setItem("loggedUser", JSON.stringify(user));
-      setUser(user);
+      dispatch(setUser(user));
 
      
     } catch (exception) {
