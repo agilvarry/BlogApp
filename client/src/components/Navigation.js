@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { Button, NavDropdown, Navbar, Container } from "react-bootstrap";
+import { Button, NavDropdown, Navbar, Container, Nav } from "react-bootstrap";
 import LoginForm from "./LoginForm";
 import NewUserForm from "./NewUserForm";
-import { useDispatch, useSelector } from 'react-redux';
-import {setUser} from '../reducers/userReducer'
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../reducers/userReducer";
+import { Link } from "react-router-dom";
 const Navigation = () => {
-  const dispatch = useDispatch()
-  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const [loginVisible, setLoginVisible] = useState(false);
   const [newVisible, setNewVisible] = useState(false);
-  
+
   const logOut = () => {
     window.localStorage.removeItem("loggedInUser");
     dispatch(setUser(null));
@@ -55,7 +56,7 @@ const Navigation = () => {
             variant="primary"
             onClick={() => setNewVisible(true)}
           >
-            create user
+            New user{" "}
           </Button>
         </div>
         <div style={showWhenVisible}>
@@ -65,6 +66,7 @@ const Navigation = () => {
             variant="secondary"
             onClick={() => setNewVisible(false)}
           >
+            {" "}
             Cancel
           </Button>
         </div>
@@ -83,15 +85,44 @@ const Navigation = () => {
     );
   };
 
+  const linkStyle = {
+    textDecoration: "none",
+    color: "black",
+    margin: 5
+  };
+
   return (
     <Navbar bg="light" expand="md">
       <Container>
-        <Navbar.Brand>Blogs Collection</Navbar.Brand>
+        <Nav>
+          <Navbar.Brand>
+            <Link style={{textDecoration: "none", color: "black"}} to={`/`}>
+              Blogs Collection
+            </Link>
+          </Navbar.Brand>
+          {user === null ? (
+            <></>
+          ) : (
+            <>
+              <Nav.Link>
+                <Link style={linkStyle} to={`/users`}>
+                  Users
+                </Link>
+                |
+                <Link style={linkStyle} to={`/users/${user.id}`}>
+                  {user.username} home</Link>
+              </Nav.Link>
+            </>
+          )}
+        </Nav>
       </Container>
+
       {user === null ? (
         <Container>
           <Navbar.Collapse className="justify-content-end">
-            <NavDropdown autoClose="outside" align="end" title="Log In">{logInOrCreate()}</NavDropdown>
+            <NavDropdown autoClose="outside" align="end" title="Log In">
+              {logInOrCreate()}
+            </NavDropdown>
           </Navbar.Collapse>
         </Container>
       ) : (

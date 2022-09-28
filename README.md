@@ -3,9 +3,11 @@
 
 
 TODO:
-1. fix error creating users
-2. Add Page Links to Navigation
-3. Style Pages
+0. Style Pages
+2. Blog form gets own Page
+3. fix blog sorting by likes
+4. add like button to blog page
+
 
 LAST:
 1. Implement the backend functionality for commenting on blog posts, anonymous and (possibly not when logged in).
