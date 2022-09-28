@@ -4,8 +4,10 @@
 
 TODO:
 1. fix error creating users
-5. Add Page Links to Navigation
-6. Implement the backend functionality for commenting on blog posts, anonymous and (possibly not when logged in).
-7. Extend the application so that users can add comments to blog posts from the frontend.
-9. on logout automatically go to '/'
-0. Style Pages
+2. Add Page Links to Navigation
+3. Style Pages
+
+LAST:
+1. Implement the backend functionality for commenting on blog posts, anonymous and (possibly not when logged in).
+2. Extend the application so that users can add comments to blog posts from the frontend.
+3. on logout automatically go to '/'

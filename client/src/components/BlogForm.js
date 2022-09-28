@@ -1,21 +1,19 @@
 import { useState } from "react";
 import blogService from "../services/blogs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { appendBlog } from "../reducers/blogReducer";
 import { setNotification } from "../reducers/notificationReducer";
 const BlogForm = () => {
   const dispatch = useDispatch();
-
+  const user = useSelector(state => state.user);
+  console.log(user)
   const [newBlogTitle, setNewBlogTitle] = useState("");
-  const [newBlogAuthor, setNewBlogAuthor] = useState("");
   const [newBlogContent, setNewBlogContent] = useState("");
 
   const handleTitleChange = (event) => {
     setNewBlogTitle(event.target.value);
   };
-  const handleAuthorChange = (event) => {
-    setNewBlogAuthor(event.target.value);
-  };
+
   const handleContentChange = (event) => {
     setNewBlogContent(event.target.value);
   };
@@ -24,7 +22,7 @@ const BlogForm = () => {
     event.preventDefault();
     const blogObject = {
       title: newBlogTitle,
-      author: newBlogAuthor,
+      author: user.username,
       content: newBlogContent,
     };
     try {
@@ -32,7 +30,7 @@ const BlogForm = () => {
       dispatch(appendBlog(returnedBlog));
 
       setNewBlogTitle("");
-      setNewBlogAuthor("");
+  
       setNewBlogContent("");
       dispatch(setNotification("Added Blog"));
       setTimeout(() => {
@@ -51,12 +49,12 @@ const BlogForm = () => {
       <form onSubmit={addBlog}>
         <label htmlFor="title">Title</label>
         <input value={newBlogTitle} id="title" onChange={handleTitleChange} />
-        <label htmlFor="author">Author</label>
-        <input
+        {/* <label htmlFor="author">Author</label> */}
+        {/* <input
           value={newBlogAuthor}
           id="author"
           onChange={handleAuthorChange}
-        />
+        /> */}
         <label htmlFor="content">Content</label>
         <input
           value={newBlogContent}
