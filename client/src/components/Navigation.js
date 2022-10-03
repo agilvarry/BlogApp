@@ -104,7 +104,6 @@ const Navigation = () => {
             <></>
           ) : (
             <>
-              <Nav.Link>
                 <Link style={linkStyle} to={`/users`}>
                   Users
                 </Link>
@@ -116,7 +115,6 @@ const Navigation = () => {
                 <Link style={linkStyle} to="/blogs/new">
                 New Blog
                 </Link>
-              </Nav.Link>
             </>
           )}
         </Nav>

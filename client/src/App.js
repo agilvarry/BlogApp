@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import blogService from "./services/blogs";
 import Notification from "./components/Notification";
 import Navigation from "./components/Navigation";
-import { Routes, Route, Link} from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import Home from "./components/Home";
 import Users from "./components/Users";
 import User from "./components/User";
@@ -15,20 +15,23 @@ import BlogForm from "./components/BlogForm";
 const App = () => {
   const dispatch = useDispatch();
 
-  async function fetchData() {
-    const loggedUserJSON = window.localStorage.getItem("loggedInUser");
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON);
-      dispatch(setUser(user));
-      
-      blogService.setToken(user.token); //TODO: move into a reducer?
-    }
-    dispatch(initializeUserList());
-    dispatch(initializeBlogs());  
-  }
+  
 
   useEffect(() => {
+    async function fetchData() {
+      const loggedUserJSON = window.localStorage.getItem("loggedInUser");
+      if (loggedUserJSON) {
+        const user = JSON.parse(loggedUserJSON);
+        dispatch(setUser(user));
+        
+        blogService.setToken(user.token); //TODO: move into a reducer?
+      }
+      dispatch(initializeUserList());
+      dispatch(initializeBlogs());  
+    }
+
     fetchData();
+
   }, [dispatch]);
 
   return (
