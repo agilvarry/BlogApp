@@ -1,5 +1,5 @@
 # BlogApp
- Simple Blog App Using Express and React
+ The worlds simplest and least attractive blog app made using Express and React
 
 
 TODO:
