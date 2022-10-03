@@ -3,6 +3,7 @@ import blogService from "../services/blogs";
 import { useDispatch, useSelector } from "react-redux";
 import { appendBlog } from "../reducers/blogReducer";
 import { setNotification } from "../reducers/notificationReducer";
+import {Button, Form} from 'react-bootstrap';
 const BlogForm = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
@@ -45,25 +46,22 @@ const BlogForm = () => {
   };
 
   return (
-    <>
+    <div style={{display: "flex",justifyContent: "center", flexDirection: "column"}}>
+      <div>
+    <h1>New Blog</h1>
       <form onSubmit={addBlog}>
-        <label htmlFor="title">Title</label>
-        <input value={newBlogTitle} id="title" onChange={handleTitleChange} />
-        {/* <label htmlFor="author">Author</label> */}
-        {/* <input
-          value={newBlogAuthor}
-          id="author"
-          onChange={handleAuthorChange}
-        /> */}
-        <label htmlFor="content">Content</label>
-        <input
+        <label htmlFor="title">Title</label><br />
+        <input value={newBlogTitle} id="title" onChange={handleTitleChange} /><br />
+        <label htmlFor="content">Content</label><br />
+        <textarea
           value={newBlogContent}
           id="content"
           onChange={handleContentChange}
-        />
-        <button type="submit">save</button>
+        /><br />
+        <Button type="submit">save</Button>
       </form>
-    </>
+      </div>
+    </div>
   );
 };
 

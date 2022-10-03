@@ -88,7 +88,7 @@ const Navigation = () => {
   const linkStyle = {
     textDecoration: "none",
     color: "black",
-    margin: 5
+    margin: 5,
   };
 
   return (
@@ -96,7 +96,7 @@ const Navigation = () => {
       <Container>
         <Nav>
           <Navbar.Brand>
-            <Link style={{textDecoration: "none", color: "black"}} to={`/`}>
+            <Link style={{ textDecoration: "none", color: "black" }} to={`/`}>
               Blogs Collection
             </Link>
           </Navbar.Brand>
@@ -110,7 +110,12 @@ const Navigation = () => {
                 </Link>
                 |
                 <Link style={linkStyle} to={`/users/${user.id}`}>
-                  {user.username} home</Link>
+                  My Blogs
+                </Link >
+                |
+                <Link style={linkStyle} to="/blogs/new">
+                New Blog
+                </Link>
               </Nav.Link>
             </>
           )}

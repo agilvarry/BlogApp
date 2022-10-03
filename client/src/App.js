@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { initializeBlogs } from "./reducers/blogReducer";
 import { setUser } from './reducers/userReducer';
 import { initializeUserList } from './reducers/userListReducer';
+import BlogForm from "./components/BlogForm";
 const App = () => {
   const dispatch = useDispatch();
 
@@ -37,6 +38,7 @@ const App = () => {
       <Routes>
         <Route path="/users/:id" element={<User />} />
         <Route path="/blogs/:id" element={<BlogView />} />
+        <Route path = "/blogs/new" element={<BlogForm />} />
         <Route path="/users" element={<Users />} />
         <Route path="/"element={<Home  />} />
       </Routes>
